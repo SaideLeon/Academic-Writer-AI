@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Writer AI | Trabalhos Acadêmicos com IA</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1e40af;
+            --primary-light: #93c5fd;
+            --secondary-color: #4f46e5;
+            --accent-color: #6366f1;
+            --text-dark: #1e293b;
+            --text-light: #f8fafc;
+            --text-gray: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --radius-sm: 0.25rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 1rem;
+            --transition: all 0.3s ease-in-out;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+        }
+
+        /* Header */
+        header {
+            background-color: var(--bg-white);
+            box-shadow: var(--shadow-sm);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-left: 2rem;
+        }
+        
+        .nav-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 10rem 0 6rem;
+            background: linear-gradient(135deg, var(--bg-white) 0%, var(--bg-light) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary-light) 0%, rgba(147, 197, 253, 0) 70%);
+            top: -300px;
+            right: -300px;
+            z-index: 0;
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-text {
+            flex: 0 0 55%;
+        }
+        
+        .hero-image {
+            flex: 0 0 40%;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .hero-image img {
+            max-width: 100%;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .hero-title {
+            font-size: 3rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+        
+        .hero-title span {
+            color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .hero-title span::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background-color: var(--primary-light);
+            z-index: -1;
+            opacity: 0.7;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+        }
+        
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Features */
+        .features {
+            padding: 6rem 0;
+            background-color: var(--bg-white);
+        }
+        
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+        
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: var(--bg-light);
+            padding: 2rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            height: 100%;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .feature-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            border-radius: 50%;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+        
+        .feature-desc {
+            color: var(--text-gray);
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 6rem 0;
+            background-color: var(--bg-light);
+        }
+        
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .step {
+            text-align: center;
+            position: relative;
+            padding: 0 1rem;
+        }
+        
+        .step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            font-weight: 700;
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 25px;
+            right: -50%;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-light);
+            z-index: 1;
+        }
+        
+        .step-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+        
+        .step-desc {
+            color: var(--text-gray);
+        }
+
+        /* Demo */
+        .demo {
+            padding: 6rem 0;
+            background-color: var(--bg-white);
+        }
+        
+        .demo-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+        }
+        
+        .demo-text {
+            flex: 0 0 45%;
+        }
+        
+        .demo-list {
+            list-style: none;
+            margin: 2rem 0;
+        }
+        
+        .demo-list-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .demo-list-icon {
+            color: var(--primary-color);
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .demo-image {
+            flex: 0 0 50%;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .demo-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* CTA */
+        .cta {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: var(--text-light);
+            text-align: center;
+        }
+        
+        .cta-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-btn {
+            background-color: var(--text-light);
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            padding: 12px 32px;
+        }
+        
+        .cta-btn:hover {
+            background-color: var(--bg-light);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--text-dark);
+            color: var(--text-light);
+            padding: 4rem 0 2rem;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-logo {
+            color: var(--text-light);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .footer-desc {
+            color: var(--text-gray);
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .footer-social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        
+        .footer-social-link:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .footer-title {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-link {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-link a {
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-link a:hover {
+            color: var(--primary-light);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-copyright {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animated {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 992px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-text {
+                flex: 0 0 100%;
+                margin-bottom: 3rem;
+            }
+            
+            .hero-btns {
+                justify-content: center;
+            }
+            
+            .step:not(:last-child)::after {
+                display: none;
+            }
+            
+            .demo-container {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .demo-text, .demo-image {
+                flex: 0 0 100%;
+            }
+        }
+        
+        @media screen and (max-width: 768px) {
+            .header-container {
+                padding: 1rem 0;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                flex-direction: column;
+                background-color: var(--bg-white);
+                box-shadow: var(--shadow-md);
+                padding: 2rem;
+                align-items: center;
+                gap: 1.5rem;
+                transform: translateY(-150%);
+                transition: var(--transition);
+                z-index: 999;
+            }
+            
+            .nav-menu.active {
+                transform: translateY(0);
+            }
+            
+            .nav-item {
+                margin: 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+        
+        @media screen and (max-width: 576px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .features-grid, .steps {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .footer-social {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <span>Academic</span>Writer<span>AI</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="#features" class="nav-link">Funcionalidades</a></li>
+                <li class="nav-item"><a href="#how-it-works" class="nav-link">Como Funciona</a></li>
+                <li class="nav-item"><a href="#demo" class="nav-link">Demonstração</a></li>
+                <li class="nav-item"><a href="#" class="btn">Começar Agora</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">Sistema Inteligente para <span>Trabalhos Acadêmicos</span></h1>
+                <p class="hero-subtitle">Gere trabalhos acadêmicos completos e formatados de acordo com as normas APA 7ª edição com apenas alguns cliques, usando inteligência artificial avançada.</p>
+                <div class="hero-btns">
+                    <a href="#" class="btn">Experimentar Grátis</a>
+                    <a href="#how-it-works" class="btn btn-secondary">Saiba Mais</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="/api/placeholder/600/400" alt="AcademicWriter em ação" />
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Funcionalidades Exclusivas</h2>
+                <p class="section-subtitle">Nossa plataforma ajuda estudantes e pesquisadores a elaborar trabalhos acadêmicos de alta qualidade com facilidade e rapidez.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📑</div>
+                    <h3 class="feature-title">Geração de Índice Estruturado</h3>
+                    <p class="feature-desc">A partir do tema fornecido, nosso sistema gera automaticamente um índice com tópicos e subtópicos relevantes para seu trabalho acadêmico.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📝</div>
+                    <h3 class="feature-title">Elaboração de Conteúdo</h3>
+                    <p class="feature-desc">Desenvolve o conteúdo completo para cada seção do índice, seguindo rigorosamente as normas APA 7ª edição.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3 class="feature-title">Conversão para .docx</h3>
+                    <p class="feature-desc">Transforma automaticamente o conteúdo em um documento Word com toda a formatação acadêmica necessária.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✨</div>
+                    <h3 class="feature-title">Formatação Acadêmica Automática</h3>
+                    <p class="feature-desc">Aplica fonte Times New Roman 12pt, espaçamento 1.5, texto justificado e margens adequadas, conforme exigências acadêmicas.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Personalização Flexível</h3>
+                    <p class="feature-desc">Permite personalizar o tipo de trabalho (artigo, TCC, dissertação) e definir sua própria estrutura, caso deseje.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3 class="feature-title">Visualização e Edição</h3>
+                    <p class="feature-desc">Visualize e edite o conteúdo em Markdown antes de exportar para Word, garantindo controle total sobre o resultado final.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Como Funciona</h2>
+                <p class="section-subtitle">Gerar trabalhos acadêmicos nunca foi tão fácil. Apenas 4 passos simples para criar seu documento pronto para entrega.</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Informe o Tema</h3>
+                    <p class="step-desc">Digite o tema principal do seu trabalho acadêmico e, opcionalmente, selecione o tipo de trabalho.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Gere o Índice</h3>
+                    <p class="step-desc">Nossa IA criará automaticamente uma estrutura lógica e completa para seu trabalho.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Desenvolva o Conteúdo</h3>
+                    <p class="step-desc">Com um clique, a IA desenvolve todos os tópicos com conteúdo relevante e acadêmico.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">Exporte como Word</h3>
+                    <p class="step-desc">Baixe seu documento .docx completamente formatado segundo as normas APA 7ª edição.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo -->
+    <section class="demo" id="demo">
+        <div class="container demo-container">
+            <div class="demo-text">
+                <div class="section-header" style="text-align: left; margin-left: 0;">
+                    <h2 class="section-title">Veja a ferramenta em ação</h2>
+                    <p class="section-subtitle">Nossa plataforma combina inteligência artificial avançada com formatação acadêmica perfeita.</p>
+                </div>
+                <ul class="demo-list">
+                    <li class="demo-list-item">
+                        <span class="demo-list-icon">✓</span>
+                        <div>
+                            <strong>Times New Roman 12pt</strong> - Fonte padrão para documentos acadêmicos.
+                        </div>
+                    </li>
+                    <li class="demo-list-item">
+                        <span class="demo-list-icon">✓</span>
+                        <div>
+                            <strong>Espaçamento 1.5</strong> - Espaçamento entre linhas ideal para leitura acadêmica.
+                        </div>
+                    </li>
+                    <li class="demo-list-item">
+                        <span class="demo-list-icon">✓</span>
+                        <div>
+                            <strong>Texto justificado</strong> - Alinhamento profissional nas bordas do documento.
+                        </div>
+                    </li>
+                    <li class="demo-list-item">
+                        <span class="demo-list-icon">✓</span>
+                        <div>
+                            <strong>Citações conforme APA</strong> - Formatação correta para todas as referências.
+                        </div>
+                    </li>
+                    <li class="demo-list-item">
+                        <span class="demo-list-icon">✓</span>
+                        <div>
+                            <strong>Margens corretas</strong> - 3cm à esquerda e 2cm nas demais bordas.
+                        </div>
+                    </li>
+                </ul>
+                <a href="#" class="btn">Ver Demonstração Completa</a>
+            </div>
+            <div class="demo-image">
+                <img src="/api/placeholder/600/500" alt="Demonstração do AcademicWriter" />
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container">
+            <h2 class="cta-title">Pronto para revolucionar seus trabalhos acadêmicos?</h2>
+            <p class="cta-subtitle">Experimente o Academic Writer AI hoje mesmo e economize horas de trabalho na elaboração de documentos acadêmicos perfeitos.</p>
+            <a href="#" class="btn cta-btn">Começar Gratuitamente</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div>
+                    <a href="#" class="footer-logo">AcademicWriterAI</a>
+                    <p class="footer-desc">Sistema inteligente para elaboração de trabalhos acadêmicos com geração de documento .docx conforme normas APA 7ª edição.</p>
+                    <div class="footer-social">
+                        <a href="#" class="footer-social-link">FB</a>
+                        <a href="#" class="footer-social-link">TW</a>
+                        <a href="#" class="footer-social-link">IN</a>
+                        <a href="#" class="footer-social-link">YT</a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="footer-title">Produto</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="#">Funcionalidades</a></li>
+                        <li class="footer-link"><a href="#">Planos e Preços</a></li>
+                        <li class="footer-link"><a href="#">FAQ</a></li>
+                        <li class="footer-link"><a href="#">Tutoriais</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="footer-title">Empresa</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="#">Sobre Nós</a></li>
+                        <li class="footer-link"><a href="#">Contato</a></li>
+                        <li class="footer-link"><a href="#">Blog</a></li>
+                        <li class="footer-link"><a href="#">Carreiras</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="footer-title">Legal</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="#">Termos de Uso</a></li>
+                        <li class="footer-link"><a href="#">Política de Privacidade</a></li>
+                        <li class="footer-link"><a href="#">Cookies</a></li>
+                        <li class="footer-link"><a href="#">Propriedade Intelectual</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">&copy; 2025 Academic Writer AI. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navMenu = document.getElementById('navMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+        
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Close mobile menu if open
+                navMenu.classList.remove('active');
+                
+                // Scroll to element
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Animation on scroll
+        const animatedElements = document.querySelectorAll('.feature-card, .step, .demo-text, .demo-image');
+        
+        function checkIfInView() {
+            animatedElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementTop < windowHeight - 100) {
+                    element.classList.add('animated');
+                }
+            });
+        }
+        
+        // Check on load
+        window.addEventListener('load', checkIfInView);
+        
+        // Check on scroll
+        window.addEventListener('scroll', checkIfInView);
+    </script>
+</body>
+</html>

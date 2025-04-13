@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Writer AI | Área do Usuário</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1e40af;
+            --primary-light: #93c5fd;
+            --secondary-color: #4f46e5;
+            --accent-color: #6366f1;
+            --text-dark: #1e293b;
+            --text-light: #f8fafc;
+            --text-gray: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --radius-sm: 0.25rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 1rem;
+            --transition: all 0.3s ease-in-out;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+        }
+
+        /* Header */
+        header {
+            background-color: var(--bg-white);
+            box-shadow: var(--shadow-sm);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-left: 2rem;
+        }
+        
+        .nav-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        /* Main workspace */
+        .main-workspace {
+            padding-top: 80px;
+            min-height: calc(100vh - 80px);
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-white);
+            border-right: 1px solid rgba(0,0,0,0.1);
+            padding: 2rem 1rem;
+            height: calc(100vh - 80px);
+            position: fixed;
+            overflow-y: auto;
+        }
+
+        .sidebar-title {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-menu-link {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            color: var(--text-dark);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
+
+        .sidebar-menu-link:hover,
+        .sidebar-menu-link.active {
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+        }
+
+        .sidebar-menu-icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Content area */
+        .content-area {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2rem;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .page-subtitle {
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+        }
+
+        /* Input form */
+        .input-form {
+            background-color: var(--bg-white);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .radio-input {
+            margin-right: 0.5rem;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        /* Result tabs */
+        .result-tabs {
+            background-color: var(--bg-white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+
+        .tabs-header {
+            display: flex;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .tab-button {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-gray);
+            position: relative;
+        }
+
+        .tab-button.active {
+            color: var(--primary-color);
+        }
+
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+
+        .tab-content {
+            padding: 2rem;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Index tab */
+        .index-container {
+            border: 1px solid #ddd;
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .index-item {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .index-item.level-1 {
+            font-weight: 700;
+            margin-top: 1.5rem;
+        }
+
+        .index-item.level-2 {
+            padding-left: 1.5rem;
+            font-weight: 600;
+        }
+
+        .index-item.level-3 {
+            padding-left: 3rem;
+            font-weight: normal;
+        }
+
+        /* Content tab */
+        .content-editor {
+            border: 1px solid #ddd;
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            min-height: 400px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .content-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        /* AI assistant */
+        .ai-assistant {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+            z-index: 100;
+        }
+
+        .ai-assistant:hover {
+            transform: scale(1.1);
+        }
+
+        .ai-assistant.active {
+            transform: rotate(45deg);
+        }
+
+        .ai-chat-container {
+            position: fixed;
+            bottom: 7rem;
+            right: 2rem;
+            width: 350px;
+            height: 450px;
+            background-color: var(--bg-white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 99;
+            transform: translateY(20px);
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .ai-chat-container.active {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .ai-chat-header {
+            padding: 1rem;
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ai-chat-close {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .ai-chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .ai-message {
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ai-message-bubble {
+            max-width: 80%;
+            padding: 0.8rem 1rem;
+            border-radius: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .ai-message.ai .ai-message-bubble {
+            background-color: var(--primary-light);
+            color: var(--text-dark);
+            border-top-left-radius: 0;
+            align-self: flex-start;
+        }
+
+        .ai-message.user .ai-message-bubble {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            border-top-right-radius: 0;
+            align-self: flex-end;
+        }
+
+        .ai-chat-input {
+            padding: 1rem;
+            border-top: 1px solid rgba(0,0,0,0.1);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .ai-chat-input input {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+        }
+
+        .ai-chat-input button {
+            padding: 0.8rem;
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+        }
+
+        /* Loader */
+        .loader-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 5px solid var(--primary-light);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spinner 1s linear infinite;
+        }
+
+        @keyframes spinner {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 992px) {
+            .sidebar {
+                width: 70px;
+                padding: 2rem 0.5rem;
+            }
+            
+            .sidebar-title {
+                display: none;
+            }
+            
+            .sidebar-menu-text {
+                display: none;
+            }
+            
+            .sidebar-menu-link {
+                padding: 0.8rem;
+                justify-content: center;
+            }
+            
+            .sidebar-menu-icon {
+                margin-right: 0;
+            }
+            
+            .content-area {
+                margin-left: 70px;
+            }
+        }
+        
+        @media screen and (max-width: 768px) {
+            .header-container {
+                padding: 1rem 0;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                flex-direction: column;
+                background-color: var(--bg-white);
+                box-shadow: var(--shadow-md);
+                padding: 2rem;
+                align-items: center;
+                gap: 1.5rem;
+                transform: translateY(-150%);
+                transition: var(--transition);
+                z-index: 999;
+            }
+            
+            .nav-menu.active {
+                transform: translateY(0);
+            }
+            
+            .nav-item {
+                margin: 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .sidebar {
+                transform: translateX(-100%);
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 240px;
+                z-index: 1000;
+                transition: var(--transition);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .sidebar-menu-text {
+                display: block;
+            }
+            
+            .sidebar-menu-link {
+                padding: 0.8rem 1rem;
+                justify-content: flex-start;
+            }
+            
+            .sidebar-menu-icon {
+                margin-right: 10px;
+            }
+            
+            .content-area {
+                margin-left: 0;
+            }
+            
+            .mobile-sidebar-toggle {
+                position: fixed;
+                bottom: 2rem;
+                left: 2rem;
+                width: 50px;
+                height: 50px;
+                background-color: var(--primary-color);
+                color: var(--text-light);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.5rem;
+                z-index: 100;
+                box-shadow: var(--shadow-md);
+                cursor: pointer;
+            }
+        }
+        
+        @media screen and (max-width: 576px) {
+            .form-buttons {
+                flex-direction: column;
+            }
+            
+            .ai-chat-container {
+                width: calc(100% - 2rem);
+                right: 1rem;
+                bottom: 6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <span>Academic</span>Writer<span>AI</span>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="#" class="nav-link">Início</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Tutorial</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Meus Trabalhos</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Configurações</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main workspace -->
+    <div class="main-workspace">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <h3 class="sidebar-title">Painel do Usuário</h3>
+            <ul class="sidebar-menu">
+                <li class="sidebar-menu-item">
+                    <a href="#" class="sidebar-menu-link active">
+                        <span class="sidebar-menu-icon">📝</span>
+                        <span class="sidebar-menu-text">Novo Trabalho</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="#" class="sidebar-menu-link">
+                        <span class="sidebar-menu-icon">📚</span>
+                        <span class="sidebar-menu-text">Meus Trabalhos</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="#" class="sidebar-menu-link">
+                        <span class="sidebar-menu-icon">📊</span>
+                        <span class="sidebar-menu-text">Estatísticas</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="#" class="sidebar-menu-link">
+                        <span class="sidebar-menu-icon">📑</span>
+                        <span class="sidebar-menu-text">Templates</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="#" class="sidebar-menu-link">
+                        <span class="sidebar-menu-icon">⚙️</span>
+                        <span class="sidebar-menu-text">Configurações</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="#" class="sidebar-menu-link">
+                        <span class="sidebar-menu-icon">📋</span>
+                        <span class="sidebar-menu-text">Normas APA</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="#" class="sidebar-menu-link">
+                        <span class="sidebar-menu-icon">❓</span>
+                        <span class="sidebar-menu-text">Ajuda</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Content area -->
+        <div class="content-area">
+            <h1 class="page-title">Novo Trabalho Acadêmico</h1>
+            <p class="page-subtitle">Preencha as informações abaixo para gerar seu trabalho acadêmico personalizado.</p>
+
+            <!-- Input form -->
+            <div class="input-form">
+                <div class="form-group">
+                    <label for="trabalho-tema" class="form-label">Tema do Trabalho</label>
+                    <input type="text" id="trabalho-tema" class="form-input" placeholder="Ex: Impactos da tecnologia no ensino superior durante a pandemia">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Tipo de Trabalho</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="tipo-trabalho" class="radio-input" value="artigo" checked>
+                            Artigo Científico
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="tipo-trabalho" class="radio-input" value="tcc">
+                            TCC
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="tipo-trabalho" class="radio-input" value="monografia">
+                            Monografia
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="tipo-trabalho" class="radio-input" value="dissertacao">
+                            Dissertação
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="trabalho-area" class="form-label">Área de Conhecimento</label>
+                    <select id="trabalho-area" class="form-select">
+                        <option value="" selected disabled>Selecione uma área de conhecimento</option>
+                        <option value="ciencias-sociais">Ciências Sociais</option>
+                        <option value="educacao">Educação</option>
+                        <option value="saude">Saúde</option>
+                        <option value="engenharia">Engenharia</option>
+                        <option value="administracao">Administração</option>
+                        <option value="direito">Direito</option>
+                        <option value="tecnologia">Tecnologia da Informação</option>
+                        <option value="psicologia">Psicologia</option>
+                        <option value="outro">Outro</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="trabalho-instrucoes" class="form-label">Instruções Adicionais (opcional)</label>
+                    <textarea id="trabalho-instrucoes" class="form-textarea" placeholder="Ex: Gostaria de focar no impacto psicológico dos estudantes ou incluir dados específicos sobre evasão escolar..."></textarea>
+                </div>
+
+                <div class="form-buttons">
+                    <button id="btn-gerar-indice" class="btn">Gerar Índice</button>
+                    <button id="btn-limpar" class="btn btn-secondary">Limpar</button>
+                </div>
+            </div>
+
+            <!-- Result tabs -->
+            <div class="result-tabs">
+                <div class="tabs-header">
+                    <button class="tab-button active" data-tab="tab-indice">Índice</button>
+                    <button class="tab-button" data-tab="tab-conteudo">Conteúdo</button>
+                    <button class="tab-button" data-tab="tab-preview">Visualização</button>
+                </div>
+
+                <!-- Index tab -->
+                <div id="tab-indice" class="tab-content active">
+                    <p>O índice do seu trabalho será gerado aqui após você clicar em "Gerar Índice".</p>
+                    <div class="index-container" id="indice-resultado" style="display: none;">
+                        <div class="index-item level-1">1. INTRODUÇÃO</div>
+                        <div class="index-item level-1">2. FUNDAMENTAÇÃO TEÓRICA</div>
+                        <div class="index-item level-2">2.1 Tecnologia na Educação Superior</div>
+                        <div class="index-item level-2">2.2 Ensino Remoto e Pandemia</div>
+                        <div class="index-item level-2">2.3 Desafios e Oportunidades</div>
+                        <div class="index-item level-1">3. METODOLOGIA</div>
+                        <div class="index-item level-2">3.1 Abordagem da Pesquisa</div>
+                        <div class="index-item level-2">3.2 Coleta de Dados</div>
+                        <div class="index-item level-1">4. RESULTADOS E DISCUSSÃO</div>
+                        <div class="index-item level-2">4.1 Impactos no Aprendizado</div>
+                        <div class="index-item level-2">4.2 Percepção dos Docentes</div>
+                        <div class="index-item level-2">4.3 Percepção dos Discentes</div>
+                        <div class="index-item level-1">5. CONSIDERAÇÕES FINAIS</div>
+                        <div class="index-item level-1">REFERÊNCIAS</div>
+                    </div>
+                    <div class="content-actions">
+                        <button id="btn-editar-indice" class="btn btn-secondary" style="display: none;">Editar Índice</button>
+                        <button id="btn-gerar-conteudo" class="btn" style="display: none;">Gerar Conteúdo</button>
+                    </div>
+                </div>
+
+                <!-- Content tab -->
+                <div id="tab-conteudo" class="tab-content">
+                    <p>O conteúdo do seu trabalho será gerado aqui após você clicar em "Gerar Conteúdo".</p>
+                    <div class="content-editor" id="conteudo-resultado" style="display: none;">
+                        <h2>1. INTRODUÇÃO</h2>
+                        <p>A pandemia de COVID-19 provocou transformações significativas em diversos setores da sociedade, dentre os quais o sistema educacional foi um dos mais afetados. Com a necessidade de isolamento social, as instituições de ensino superior precisaram adaptar rapidamente suas metodologias e práticas pedagógicas para o ambiente virtual.</p>
+                        <p>Este trabalho tem como objetivo analisar os impactos da tecnologia no ensino superior durante o período pandêmico, considerando tanto os desafios enfrentados quanto as oportunidades surgidas neste contexto de transformação acelerada.</p>
+                        <p>A relevância desta pesquisa se justifica pela necessidade de compreender como as ferramentas tecnológicas influenciaram os processos de ensino-aprendizagem e quais práticas poderão ser incorporadas definitivamente ao ambiente acadêmico no período pós-pandemia.</p>
+                        
+                        <h2>2. FUNDAMENTAÇÃO TEÓRICA</h2>
+                        <h3>2.1 Tecnologia na Educação Superior</h3>
+                        <p>A integração da tecnologia no ensino superior não é um fenômeno recente, mas vinha ocorrendo de forma gradual até o advento da pandemia. Segundo Santos (2019), as instituições de ensino superior já vinham incorporando ferramentas digitais como ambientes virtuais de aprendizagem, bibliotecas digitais e sistemas de gestão acadêmica.</p>
+                        <p>No entanto, como aponta Ferreira (2020), a utilização destas tecnologias frequentemente acontecia de forma complementar às aulas presenciais, sem substituí-las integralmente. O cenário pandêmico alterou drasticamente esta dinâmica, tornando as plataformas digitais o principal meio de interação entre professores e alunos.</p>
+                    </div>
+                    <div class="content-actions">
+                        <button id="btn-editar-conteudo" class="btn btn-secondary" style="display: none;">Editar Conteúdo</button>
+                        <button id="btn-exportar-word" class="btn" style="display: none;">Exportar para Word</button>
+                    </div>
+                </div>
+
+                <!-- Preview tab -->
+                <div id="tab-preview" class="tab-content">
+                    <p>A visualização formatada do seu trabalho aparecerá aqui após o conteúdo ser gerado.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI assistant -->
+    <div class="ai-assistant" id="aiAssistant">🤖</div>
+    <div class="ai-chat-container" id="aiChatContainer">
+        <div class="ai-chat-header">
+            <span>Assistente AcademicWriter</span>
+            <button class="ai-chat-close" id="aiChatClose">✕</button>
+        </div>
+        <div class="ai-chat-messages">
+            <div class="ai-message ai">
+                <div class="ai-message-bubble">
+                    Olá! Sou o assistente do AcademicWriter e estou aqui para ajudar com seu trabalho acadêmico. Como posso auxiliar você hoje?
+                </div>
+            </div>
+            <!-- Mais mensagens serão adicionadas dinamicamente -->
+        </div>
+        <div class="ai-chat-input">
+            <input type="text" placeholder="Digite sua mensagem..." id="aiChatMessageInput">
+            <button id="aiChatSendBtn">📤</button>
+        </div>
+    </div>
+
+    <!-- Loader -->
+    <div class="loader-container" id="loaderContainer">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Mobile sidebar toggle -->
+    <div class="mobile-sidebar-toggle" id="mobileSidebarToggle" style="display: none;">☰</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navMenu = document.getElementById('navMenu');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+            });
+            
+            // Mobile sidebar toggle
+            const mobileSidebarToggle = document.getElementById('mobileSidebarToggle');
+            const sidebar = document.getElementById('sidebar');
+            
+            if (window.innerWidth <= 768) {
+                mobileSidebarToggle.style.display = 'flex';
+            }
+            
+            window.addEventListener('resize', function() {
+                if (window.innerWidth <= 768) {
+                    mobileSidebarToggle.style.display = 'flex';
+                } else {
+                    mobileSidebarToggle.style.display = 'none';
+                    sidebar.classList.remove('active');
+                }
+            });
+            
+            mobileSidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+            });
+            
+            // Tabs
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // AI Assistant
+            const aiAssistant = document.getElementById('aiAssistant');
+            const aiChatContainer = document.getElementById('aiChatContainer');
+            const aiChatClose = document.getElementById('aiChatClose');
+            const aiChatMessages = document.querySelector('.ai-chat-messages');
+            const aiChatMessageInput = document.getElementById('aiChatMessageInput');
+            const aiChatSendBtn = document.getElementById('aiChatSendBtn');
+            
+            aiAssistant.addEventListener('click', function() {
+                aiAssistant.classList.toggle('active');
+                aiChatContainer.classList.toggle('active');
+            });
+            
+            aiChatClose.addEventListener('click', function() {
+                aiAssistant.classList.remove('active');
+                aiChatContainer.classList.remove('active');
+            });
+            
+            // Send message function
+            function sendMessage() {
+                const message = aiChatMessageInput.value.trim();
+                if (message) {
+                    // Add user message
+                    const userMessageDiv = document.createElement('div');
+                    userMessageDiv.className = 'ai-message user';
+                    userMessageDiv.innerHTML = `<div class="ai-message-bubble">${message}</div>`;
+                    aiChatMessages.appendChild(userMessageDiv);
+                    
+                    // Clear input
+                    aiChatMessageInput.value = '';
+                    
+                    // Scroll to bottom
+                    aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+                    
+                    // Show loader
+                    document.getElementById('loaderContainer').style.display = 'flex';
+                    
+                    // Simulate AI response after delay
+                    setTimeout(function() {
+                        // Hide loader
+                        document.getElementById('loaderContainer').style.display = 'none';
+                        
+                        // Add AI response
+                        const aiResponseDiv = document.createElement('div');
+                        aiResponseDiv.className = 'ai-message ai';
+                        
+                        // Sample responses based on common questions
+                        let aiResponse = '';
+                        if (message.toLowerCase().includes('como funciona')) {
+                            aiResponse = 'Para criar seu trabalho acadêmico, basta preencher o formulário com o tema, tipo de trabalho e área de conhecimento. Em seguida, clique em "Gerar Índice" e depois em "Gerar Conteúdo".';
+                        } else if (message.toLowerCase().includes('normas') || message.toLowerCase().includes('abnt') || message.toLowerCase().includes('apa')) {
+                            aiResponse = 'Todos os trabalhos gerados seguem automaticamente as normas ABNT ou APA, dependendo da sua escolha nas configurações. Você pode verificar as normas detalhadas na seção "Normas APA" do menu lateral.';
+                        } else if (message.toLowerCase().includes('editar') || message.toLowerCase().includes('modificar')) {
+                            aiResponse = 'Você pode editar tanto o índice quanto o conteúdo gerado usando os botões "Editar Índice" e "Editar Conteúdo" que aparecem após a geração.';
+                        } else {
+                            aiResponse = 'Obrigado pelo seu contato! Estou aqui para ajudar com qualquer dúvida sobre a criação de trabalhos acadêmicos. Posso auxiliar com estrutura, formatação, normas ABNT/APA ou uso da plataforma.';
+                        }
+                        
+                        aiResponseDiv.innerHTML = `<div class="ai-message-bubble">${aiResponse}</div>`;
+                        aiChatMessages.appendChild(aiResponseDiv);
+                        
+                        // Scroll to bottom again
+                        aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+                    }, 1500);
+                }
+            }
+            
+            // Send message on button click
+            aiChatSendBtn.addEventListener('click', sendMessage);
+            
+            // Send message on Enter key
+            aiChatMessageInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            // Generate index function
+            const btnGerarIndice = document.getElementById('btn-gerar-indice');
+            const indiceResultado = document.getElementById('indice-resultado');
+            const btnEditarIndice = document.getElementById('btn-editar-indice');
+            const btnGerarConteudo = document.getElementById('btn-gerar-conteudo');
+            
+            btnGerarIndice.addEventListener('click', function() {
+                const tema = document.getElementById('trabalho-tema').value.trim();
+                if (!tema) {
+                    alert('Por favor, informe o tema do trabalho!');
+                    return;
+                }
+                
+                // Show loader
+                document.getElementById('loaderContainer').style.display = 'flex';
+                
+                // Simulate index generation after delay
+                setTimeout(function() {
+                    // Hide loader
+                    document.getElementById('loaderContainer').style.display = 'none';
+                    
+                    // Show index result
+                    indiceResultado.style.display = 'block';
+                    btnEditarIndice.style.display = 'inline-block';
+                    btnGerarConteudo.style.display = 'inline-block';
+                }, 2000);
+            });
+            
+            // Generate content function
+            const btnGerarConteudoBtn = document.getElementById('btn-gerar-conteudo');
+            const conteudoResultado = document.getElementById('conteudo-resultado');
+            const btnEditarConteudo = document.getElementById('btn-editar-conteudo');
+            const btnExportarWord = document.getElementById('btn-exportar-word');
+            
+            btnGerarConteudo.addEventListener('click', function() {
+                // Show loader
+                document.getElementById('loaderContainer').style.display = 'flex';
+                
+                // Switch to content tab
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                document.querySelector('[data-tab="tab-conteudo"]').classList.add('active');
+                document.getElementById('tab-conteudo').classList.add('active');
+                
+                // Simulate content generation after delay
+                setTimeout(function() {
+                    // Hide loader
+                    document.getElementById('loaderContainer').style.display = 'none';
+                    
+                    // Show content result
+                    conteudoResultado.style.display = 'block';
+                    btnEditarConteudo.style.display = 'inline-block';
+                    btnExportarWord.style.display = 'inline-block';
+                }, 3000);
+            });
+            
+            // Clear form function
+            const btnLimpar = document.getElementById('btn-limpar');
+            
+            btnLimpar.addEventListener('click', function() {
+                document.getElementById('trabalho-tema').value = '';
+                document.querySelector('input[name="tipo-trabalho"][value="artigo"]').checked = true;
+                document.getElementById('trabalho-area').selectedIndex = 0;
+                document.getElementById('trabalho-instrucoes').value = '';
+                
+                // Reset results
+                indiceResultado.style.display = 'none';
+                btnEditarIndice.style.display = 'none';
+                btnGerarConteudo.style.display = 'none';
+                conteudoResultado.style.display = 'none';
+                btnEditarConteudo.style.display = 'none';
+                btnExportarWord.style.display = 'none';
+            });
+            
+            // Export to Word function
+            btnExportarWord.addEventListener('click', function() {
+                alert('Seu trabalho foi exportado para formato Word e está disponível para download!');
+            });
+        });
+    </script>
+</body>
+</html>
