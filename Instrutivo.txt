@@ -1,0 +1,66 @@
+Projeto: Academic Writer AI
+
+Objetivo:
+Desenvolver uma aplicação web com IA capaz de gerar trabalhos acadêmicos estruturados conforme a norma APA (7ª edição), com geração de índice, desenvolvimento seção por seção e exportação final em .docx.
+
+Tecnologias definidas:
+
+Framework: Next.js com TypeScript
+
+Modelo de IA: Gemini (Google)
+
+Conversor Markdown para Word: biblioteca docx (JS/TS)
+
+
+Ordem de desenvolvimento das funcionalidades:
+
+1. Geração de Índice
+Criar uma funcionalidade que, a partir de um tema fornecido, gere um índice estruturado com tópicos e subtópicos. Esse índice deve ser:
+
+Analisado por uma função intermediária que remove instruções não estruturais ou mensagens irrelevantes (exemplos: “adicione apêndice se quiser”, “índice finalizado com consenso”, etc.).
+
+Após limpeza, o índice deve ser salvo em um arquivo chamado indice.json, contendo apenas a estrutura pura do trabalho (exemplo: array de objetos com título, subtítulos ou similar).
+
+
+
+2. Sistema de Leitura do Índice
+Criar uma função que leia o indice.json e:
+
+Mantenha o controle de quais capítulos já foram desenvolvidos.
+
+Marque cada item com um campo desenvolvido: true/false.
+
+
+
+3. Desenvolvimento de Conteúdo por Capítulo
+Criar um sistema que:
+
+Leia o índice.
+
+Verifique qual é o próximo capítulo não desenvolvido.
+
+Envie esse título para o modelo Gemini e receba o conteúdo conforme as diretrizes APA.
+
+Marque o capítulo como desenvolvido: true no indice.json.
+
+
+
+4. Construção do Documento Completo
+Após o desenvolvimento de todas as seções:
+
+Juntar todas em um conteúdo Markdown.
+
+Utilizar o sistema de exportação já descrito (função exportMarkdownToDocx) para gerar o arquivo final .docx com a formatação acadêmica.
+
+
+
+
+Observações:
+
+O processo deve ser iterativo e consistente.
+
+Não se deve gerar todo o conteúdo do trabalho de uma só vez, pois isso compromete a profundidade e a autenticidade do resultado.
+
+Cada seção deve ser desenvolvida isoladamente, com tempo e atenção apropriados, para garantir um conteúdo mais realista, detalhado e convincente.
+
+
